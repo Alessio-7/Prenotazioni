@@ -1,0 +1,142 @@
+	.linkSideBar {
+	color: black;
+	font-size: 18px;
+	margin-bottom: 10px;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none;
+}
+
+.linkSideBar:hover {
+	background-color: var(--bs-primary);
+	color: white;
+}
+
+.pagina {
+	display: grid;
+	grid-template-areas: "menubar menubar menubar"
+		"laterale tabella tabella" "laterale tabella tabella";
+	grid-template-columns: auto auto 1fr;
+	grid-template-rows: auto auto 1fr;
+	width: 100vw;
+	height: 100vh;
+	background-color: #f5f5f5;
+}
+
+td, th {
+	vertical-align: middle;
+}
+
+.aggiungi {
+	background: rgb(153,217,140);
+	background: linear-gradient(135deg, rgba(153,217,140,1) 0%, rgba(118,200,147,1) 55%);
+	
+	/*position: fixed;
+	bottom: 50px;
+	right: 50px;
+	*/
+	border-radius: 20px;
+	border: none;	
+	margin-bottom: 10px;
+	height: 75px;
+	display: flex;
+	align-items: center;
+	text-align: left;
+	transition: 0.1s;
+}
+
+.aggiungi:hover {
+	transform: scale(1.05);
+}
+
+.aggiungi:active {
+	transform: scale(0.9);
+}
+
+.tabella {
+	grid-area: tabella;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding: 10px;
+	padding-right: 5px;
+	padding-bottom: 150px;
+}
+
+.table {
+	background-color: white;
+}
+
+.laterale {
+	grid-area: laterale;
+}
+
+.infoAnagrafica {
+	border: none;
+	background-color: transparent;
+	border-radius: 12px;
+	/*padding: 5px 10px;*/
+	padding: 0;
+}
+
+.infoAnagrafica:hover {
+	/*background-color: white;*/
+	color: var(--bs-primary-color)
+}
+
+.cellaBottoni {
+	width: 100px;
+}
+
+.contenitoreBottoni {
+	float: left;
+	padding-right: 10px;
+  /*display: none;*/
+}
+
+.bottoneElimina,
+.bottoneModifica {
+	background-color: transparent;
+	border-radius: 5px;
+	border: none;
+	size: 20px;
+	transition: 0.1s;
+}
+
+.bottoneModifica {
+	color: var(--bs-warning);
+	margin: 5px;
+}
+
+.bottoneModifica:hover {
+	color: white;
+	background-color: var(--bs-warning);
+}
+
+.bottoneElimina {
+	color: var(--bs-danger);
+}
+
+.bottoneElimina:hover {
+	color: white;
+	background-color: var(--bs-danger);
+}
+
+.messaggioEliminazione {
+	margin-bottom: 20px;	
+}
+    
+.tabella::-webkit-scrollbar {
+	width: 10px;
+}
+
+.tabella::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.tabella::-webkit-scrollbar-thumb {
+	background: #aaa;
+	border-radius: 5px;
+}

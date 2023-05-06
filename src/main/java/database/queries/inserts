@@ -1,0 +1,5 @@
+INSERT INTO Prenotazioni (idStanza, idAnagrafica, numeroOspiti, dataArrivo, dataPartenza) VALUES (0, 0, 0, "", "")
+INSERT INTO Anagrafica (nome, cognome, telefono) VALUES ("", "", "")
+INSERT INTO CollocazioniStanze (idStanza, idGruppo) VALUES (0, 0)
+INSERT INTO GruppiStanze (nomeGruppo) VALUES ("")
+INSERT INTO Stanze (nomeStanza) VALUES ("")

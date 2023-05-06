@@ -1,0 +1,46 @@
+@charset "ISO-8859-1";
+
+body {
+	background: rgb(26,117,159);
+	background: linear-gradient(90deg, rgba(26,117,159,1) 0%, rgba(118,200,147,1) 72%) fixed;
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 20px 20px;
+}
+
+.card {
+	background-color: white;
+	border-radius: 50px;
+	padding: 50px;
+	min-width: 360px;
+	border-collapse: separate;
+	border-spacing: 20px 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-spacing: 20px 20px;
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+.form-check {
+	margin-top: 20px;
+}
+
+h1 {
+	margin-bottom: 30px;
+}
+
+label {
+	margin-bottom: 5px;
+}
+
+.btnAccedi {
+	float: right;
+	width: 110px;
+}

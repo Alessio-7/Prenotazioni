@@ -1,0 +1,170 @@
+@charset "ISO-8859-1";
+
+body {
+	background-color: #f5f5f5;
+}
+
+.calcoloTotale, .calendario, .infoMese, griglia {
+	display: grid;
+	gap: 2px;
+	grid-auto-rows: max-content;
+	grid-auto-columns: max-content;
+}
+
+.calcoloTotale {
+	border-radius: 14px 0 0 0;
+	margin-bottom: 50px;
+}
+
+.tabellaCalendario {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 0);
+	margin-top: 10px;
+}
+
+.infoMese {
+	padding-bottom: 2px;
+	float: right;
+}
+
+.calendario {
+	/*padding-right: 2px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	height: 65vh;
+	min-height: 28px;*/
+	/*background-color: red;*/
+	border-radius: 0 0 14px 14px;
+	/*z-index: 2;*/
+}
+
+.giorno, .totale, .cellaTotale, .nomeMese, .numeriGiorni, .gruppoStanze,
+	.stanza, .cella {
+	background-color: white;
+	min-height: 28px;
+	padding: 1px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	overflow: hidden;
+}
+
+.cellaTotale, .giorno, .numeriGiorni {
+	min-width: 28px;
+	grid-column-end: span 1;
+}
+
+.nomeMese, .numeriGiorni {
+	border: 1px solid #ced4da;
+	/*box-shadow: 0px 1px 3px 1px #ced4da;*/
+}
+
+.cellaTotale, .totale {
+	background-color: #1D81AF;
+	color: white;
+}
+
+.totale {
+	flex-grow: 1;
+	width: 232px;
+}
+
+.nomeMese {
+	justify-content: space-between;
+	flex-flow: inherit;
+	font-size: 25px;
+	grid-column-start: 1;
+	height: 100px;
+	border-radius: 50px 50px 0 0;
+}
+
+.gruppoStanze {
+	width: 150px;
+}
+
+.stanza {
+	width: 80px;
+	grid-column-start: 2;
+}
+
+.giorno {
+	transition: 0.2s;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none;
+}
+
+.giorno:hover {
+	transform: scale(1.5);
+	box-shadow: 0 0 20px 0 #888;
+}
+
+.bottoneCambiaMese {
+	background-color: white;
+	border: none;
+	border-radius: 30px;
+	margin-right: 20px;
+	margin-left: 20px;
+	transition: all 0.1s;
+	width: 60px;
+	height: 60px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 30px;
+}
+
+.bottoneCambiaMese:hover {
+	background-color: #e9e9ea;
+}
+
+.bottoneCambiaMese:active {
+	/*transform: translateY(3px);*/
+	transform: scale(0.9);
+}
+
+.bottoneNuovaPrenotazione {
+	width: 210px;
+	height: 110px;
+	font-size: 22px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: auto;
+	background-color: #44C3F2;
+	border-radius: 50px;
+	border: none;
+	transition: 0.1s;
+	display: none;
+}
+
+.bottoneNuovaPrenotazione:hover {
+	transform: scale(1.05);
+}
+
+.bottoneNuovaPrenotazione:active {
+	transform: scale(0.9);
+	background-color: #96CBF5;
+}
+
+.calendario::-webkit-scrollbar {
+	width: 10px;
+}
+
+.calendario::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.calendario::-webkit-scrollbar-thumb {
+	background: #aaa;
+	border-radius: 5px;
+}
+
+.giorno:hover .tooltiptext {
+	visibility: visible;
+}

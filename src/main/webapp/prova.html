@@ -1,0 +1,159 @@
+<html>
+<head>
+<title>Nomi Files</title>
+<script type="text/javascript">
+	function generaNome() {
+		classe = document.getElementById('classe');
+		materia = document.getElementById('materia');
+		tipo = document.getElementById('tipo');
+		nome = document.getElementById('nome');
+		cognome = document.getElementById('cognome');
+		consegna = document.getElementById('consegna');
+		libro = document.getElementById('libro');
+		pagina = document.getElementById('pagina');
+		esercizio = document.getElementById('esercizio');
+
+		anno = consegna.value.split('-')[0];
+
+		cognomeF = cognome.value.toLowerCase();
+		cognomeF = cognomeF.replaceAll(" ", "-");
+
+		nomeF = nome.value.toLowerCase();
+		nomeF = nomeF.replaceAll(" ", "-");
+
+		nomeFile = `${classe.value.toLowerCase()}-${anno}_${materia.value}_${tipo.value}_${cognomeF}_${nomeF}_${consegna.value}_${libro.value.toLowerCase()}_pg${pagina.value}-es${esercizio.value}`;
+
+		document.getElementById("nome-file").value = nomeFile;
+	}
+	
+	function copia() {
+		var copyText = document.getElementById("nome-file");
+
+		copyText.select();
+		copyText.setSelectionRange(0, 99999);
+
+		navigator.clipboard.writeText(copyText.value);
+	}
+</script>
+<style type="text/css">
+body {
+	background: rgb(26, 117, 159);
+	background: linear-gradient(90deg, rgba(26, 117, 159, 1) 0%,
+		rgba(118, 200, 147, 1) 72%) fixed;
+	font-family: Arial;
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 20px 20px;
+}
+
+.card {
+	background-color: white;
+	border-radius: 50px;
+	padding: 50px;
+	min-width: 360px;
+	border-collapse: separate;
+	border-spacing: 20px 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-spacing: 20px 20px;
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+h1 {
+	margin-bottom: 30px;
+}
+
+label {
+	margin-bottom: 5px;
+}
+
+.btn {
+	float: right;
+	width: 110px;
+}
+
+.nome-file {
+	width: 230px;
+}
+</style>
+</head>
+
+<body>
+	<div class="card">
+		<h1>Nome file</h1>
+		<div class=" form-group ">
+			<label for="classe" class="-label">Classe<span
+				class="formbuilder-required">*</span></label> <input type="text"
+				class="form-control" name="classe" maxlength="2" id="classe"
+				required="required" aria-required="true">
+		</div>
+		<div class=" form-group ">
+			<label for="materia" class="-label">Materia<span
+				class="formbuilder-required">*</span></label> <select class="form-control"
+				name="materia" id="materia" required="required" aria-required="true">
+				<option value="inform" selected="true" id="materia-0">Informatica</option>
+				<option value="sta" id="materia-1">STA</option>
+				<option value="tpsit" id="materia-2">TPSIT</option>
+				<option value="sis-reti" id="materia-3">Sistemi e reti</option>
+				<option value="tec-inf" id="materia-4">Tecnologia e
+					informatica</option>
+			</select>
+		</div>
+		<div class=" form-group ">
+			<label for="tipo" class="-label">Tipo<span
+				class="formbuilder-required">*</span></label> <select class="form-control"
+				name="tipo" id="tipo" required="required" aria-required="true">
+				<option value="comp" selected="true" id="tipo-0">Compiti</option>
+				<option value="lab" id="tipo-1">Laboratorio</option>
+				<option value="proj" id="tipo-2">Progetto</option>
+			</select>
+		</div>
+		<div class=" form-group ">
+			<label for="nome" class="-label">Nome<span
+				class="formbuilder-required">*</span></label> <input type="text"
+				class="form-control" name="nome" id="nome" required="required"
+				aria-required="true">
+		</div>
+		<div class=" form-group ">
+			<label for="cognome" class="-label">Cognome<span
+				class="formbuilder-required">*</span></label> <input type="text"
+				class="form-control" name="cognome" id="cognome" required="required"
+				aria-required="true">
+		</div>
+		<div class=" form-group ">
+			<label for="consegna" class="formbuilder-date-label">Data di
+				consegna<span class="formbuilder-required">*</span>
+			</label> <input type="date" class="form-control" name="consegna"
+				id="consegna" required="required" aria-required="true">
+		</div>
+		<div class=" form-group ">
+			<label for="libro" class="-label">Libro</label> <input type="text"
+				class="form-control" name="libro" id="libro">
+		</div>
+		<div class=" form-group ">
+			<label for="pagina" class="-label">Pagina</label> <input
+				type="number" class="form-control" name="pagina" id="pagina">
+		</div>
+		<div class=" form-group ">
+			<label for="esercizio" class="-label">Esercizio</label> <input
+				type="number" class="form-control" name="esercizio" id="esercizio">
+		</div>
+		<div class=" form-group ">
+			<input type="text" class="nome-file" id="nome-file" alt="Nome File">
+			<button onclick="copia()" class="btn">Copia</button>
+		</div>
+		<div class=" form-group ">
+			<button onclick="generaNome()" class="btn">Genera
+				nome</button>
+		</div>
+	</div>
+</body>
+
+</html>
