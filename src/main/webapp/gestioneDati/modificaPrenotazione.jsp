@@ -101,21 +101,11 @@ function aggiornaDati(){
 
 	campi = new ArrayList<Wizard.Campo>();
 
-	campi.add( new Wizard.Campo( "select", "gruppoStanze", "Gruppo stanze" ) );
-	campi.add( new Wizard.Campo( "select", "stanza", "Stanza" ) );
-	campi.add( new Wizard.Campo( "hidden", "azione", "" ) );
-	campi.add( new Wizard.Campo( "hidden", "tabella", "" ) );
-	campi.add( new Wizard.Campo( "hidden", "idDato", "" ) );
-
-	tabs.put( "Scelta stanza", campi );
-
-	campi = new ArrayList<Wizard.Campo>();
-
 	campi.add( new Wizard.Campo( "date", "dataArrivo", "Data arrivo" ) );
 	campi.add( new Wizard.Campo( "date", "dataPartenza", "Data partenza" ) );
 
 	tabs.put( "Data", campi );
-
+	
 	campi = new ArrayList<Wizard.Campo>();
 
 	campi.add( new Wizard.Campo( "select", "anagrafica", "Anagrafica referente" ) );
@@ -124,6 +114,14 @@ function aggiornaDati(){
 	tabs.put( "Ospiti", campi );
 	
 	campi = new ArrayList<Wizard.Campo>();
+
+	campi.add( new Wizard.Campo( "select", "gruppoStanze", "Gruppo stanze" ) );
+	campi.add( new Wizard.Campo( "select", "stanza", "Stanza" ) );
+	campi.add( new Wizard.Campo( "hidden", "azione", "" ) );
+	campi.add( new Wizard.Campo( "hidden", "tabella", "" ) );
+	campi.add( new Wizard.Campo( "hidden", "idDato", "" ) );
+
+	tabs.put( "Scelta stanza", campi );
 	
 	%>
 	<div class="card">

@@ -6,33 +6,29 @@
 <html>
 <head>
 <title>Calendario</title>
-<jsp:include page="/jsp/bootstrap.jsp"/>
+<jsp:include page="/jsp/bootstrap.jsp" />
 <link rel="stylesheet" href="./css/calendario.css">
 
 <%
-/*java.util.Enumeration en = request.getAttributeNames();
-while (en.hasMoreElements()) {
-	Object oo = en.nextElement();
-	System.out.println(" Attributo "+oo+" = "+request.getAttribute(""+oo)+"<br>");
-}
-java.util.Enumeration en1 = request.getParameterNames();
-while (en1.hasMoreElements()) {
-	Object oo = en1.nextElement();
-	System.out.println(" Paramtero "+oo+" = "+request.getParameter(""+oo)+"<br>");
-}*/
-
-final int minimoNumeroGiorni = 7;
-int nGiorniVisualizzati;
-
 Calendario c;
+String visualizzazione;
 
 if (request.getAttribute("data") != null) {
 	LocalDate d = Calendario.toDate((String) request.getAttribute("data"));
-	nGiorniVisualizzati = (int) request.getAttribute("nGiorniVisualizzati");
-	c = Calendario.periodo(d, nGiorniVisualizzati);
+	visualizzazione = (String) request.getAttribute("visualizzazione");
+	switch (visualizzazione) {
+		case "settimana" :
+	c = Calendario.settimana(d);
+	break;
+		case "mese" :
+	c = Calendario.mese(d);
+	break;
+		default :
+	c = Calendario.questaSettimana();
+	}
 } else {
-	nGiorniVisualizzati = 10;
-	c = Calendario.periodoDaOggi(nGiorniVisualizzati);
+	visualizzazione = "settimana";
+	c = Calendario.questaSettimana();
 }
 %>
 
@@ -40,6 +36,7 @@ if (request.getAttribute("data") != null) {
 	window.onload = function cambiaURL() {
 		window.history.pushState("", "", '/prenotazioni/calendario.jsp');
 		resizewidth();
+		setDatePicker();
 	}
 
 	function resizewidth() {
@@ -70,140 +67,224 @@ if (request.getAttribute("data") != null) {
 		}
 	}
 
-	function attivaServlet(sommaGiorni) {
-
-		document.getElementById("sommaGiorni").value = sommaGiorni;
+	function attivaServlet(visualizzazione, direzione) {
+		//alert(document.getElementById("datePicker").value);
+		//alert(formatDatePickerToData(document.getElementById("datePicker").value));
+		document.getElementById("data").value = formatDatePickerToData(document.getElementById("datePicker").value);
+		document.getElementById("visualizzazione").value = visualizzazione;
+		document.getElementById("direzione").value = direzione;
 		document.getElementById("infoMese").submit();
 	}
+	
+	function getDateOfWeek(w, y) {
+	    var d = (1 + (w - 1) * 7)+1; // 1st of January + 7 days for each week
 
-	function avantiMese() {
-		attivaServlet(
-<%=nGiorniVisualizzati%>
-	);
+	    return new Date(y, 0, d);
+	}
+	
+	function getWeekNumber(d) {
+	    // Copy date so don't modify original
+	    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+	    // Set to nearest Thursday: current date + 4 - current day number
+	    // Make Sunday's day number 7
+	    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+	    // Get first day of year
+	    var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+	    // Calculate full weeks to nearest Thursday
+	    var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+	    
+	    return "W"+weekNo;
 	}
 
-	function indietroMese() {
-		attivaServlet(
-<%=-nGiorniVisualizzati%>
-	);
+	
+	function formatDataToDatePicker(data){
+		const d = data.split('/');
+		
+		switch('<%= visualizzazione%>'){
+		case 'settimana':
+			const date = new Date(d[2], d[1]-1, d[0]);
+			return d[2]+"-"+getWeekNumber(date);
+		case 'mese':
+			return d[2]+"-"+d[1];
+		}
+	}
+	
+	function formatDatePickerToData(data){
+		const d = data.split('-');
+		
+		switch('<%= visualizzazione%>'){
+		case 'settimana':
+			const date = getDateOfWeek(d[1].replace("W", ""), d[0] );
+			return date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
+		case 'mese':
+			return "1/"+d[1]+"/"+d[0];
+		}
+	}
+	
+	function setDatePicker(){
+		let datePicker = document.getElementById("datePicker");
+		let data = document.getElementById("data").value;
+		
+		switch('<%= visualizzazione%>'){
+		case 'settimana':
+			datePicker.type = "week";
+			datePicker.value = formatDataToDatePicker(data);
+			break;
+		case 'mese':
+			datePicker.type = "month";
+			datePicker.value = formatDataToDatePicker(data);
+			break;
+		default:
+			datePicker.type = "week";
+		}
 	}
 </script>
 </head>
 <body>
-	<jsp:include page="/jsp/gui/navbar.jsp" />
-	<table class="tabellaCalendario">
-		<thead
-			style="position: -webkit-sticky; position: sticky; top: 0; background-color: #f5f5f5">
-			<tr>
-				<%
-				/*
-					<td>
-						<form id="nuovaPrenotazione" style="width: 232px" action="">
-							<button type="Button" class="bottoneNuovaPrenotazione"
-								onclick="nuovaPrenotazione()">
-								<i class="bi me-2 bi-server"></i> Gestione Dati
-							</button>
-							<input type="hidden" name="data" id="data"
-								value="<%=Calendario.formatData( c.getData( 1 ) )%/>"></input>
-						</form>
-					</td>*/
-				%>
-				<td>
-					<form class="infoMese" id="infoMese" action="CambiaMeseCalendario">
-						<div class="nomeMese"
-							style="grid-column-end: span <%=c.getNumeroGiorni()%>; width:<%// (c.getNumeroGiorni()*28)+(c.getNumeroGiorni()*2)-1%>px">
-							<button type="Button" class="bottoneCambiaMese"
-								style="float: left" onclick="indietroMese()">
-								<i class="bi bi-chevron-left"></i>
-							</button>
-							<div id="scrittaMese">
-								<%= c.getNomeMese() %>
-							</div>
-							<input type="hidden" name="sommaGiorni" id="sommaGiorni"></input>
-							<input type="hidden" name="data" id="data"
-								value="<%=Calendario.formatData( c.getDataInizio() )%>"></input>
-							<button type="Button" class="bottoneCambiaMese"
-								style="float: right" onclick="avantiMese()">
-								<i class="bi bi-chevron-right"></i>
-							</button>
-						</div>
-						<%
-						int giornoFine = c.getDataFine().getDayOfMonth();
-						if ( c.getDataFine().getMonthValue() > c.getDataInizio().getMonthValue() || c.getDataFine().getYear() > c.getDataFine().getYear() ) {
-							giornoFine = c.getDataInizio().lengthOfMonth() + c.getDataFine().getDayOfMonth();
-						}
+	<div class="pagina">
+		<jsp:include page="/jsp/gui/navbar.jsp" />
+		<div
+			class="tabellaContainer d-flex justify-content-center align-items-start">
+			<table class="tabellaCalendario">
+				<thead
+					style="position: -webkit-sticky; position: sticky; top: 0; background-color: #f5f5f5">
+					<tr>
+						<td>
+							<form class="infoMese" id="infoMese"
+								action="CambiaMeseCalendario">
+								<div class="nomeMese"
+									style="grid-column-end: span <%=c.getNumeroGiorni()%>; width:<%// (c.getNumeroGiorni()*28)+(c.getNumeroGiorni()*2)-1%>px">
+									<button type="Button" class="bottoneCambiaMese"
+										style="float: left"
+										onclick="attivaServlet('<%=visualizzazione%>', -1)">
+										<i class="bi bi-chevron-left"></i>
+									</button>
+									<div id="scrittaMese">
+										<%= c.getNomeMese() %>
+									</div>
+									<input type="hidden" name="visualizzazione"
+										id="visualizzazione"></input> <input type="hidden"
+										name="direzione" id="direzione"></input> <input type="hidden"
+										name="data" id="data"
+										value="<%=Calendario.formatData( c.getDataInizio() )%>"></input>
+									<button type="Button" class="bottoneCambiaMese"
+										style="float: right"
+										onclick="attivaServlet('<%=visualizzazione%>', 1)">
+										<i class="bi bi-chevron-right"></i>
+									</button>
+								</div>
+								<%
+								int giornoFine = c.getDataFine().getDayOfMonth();
+								if ( c.getDataFine().getMonthValue() > c.getDataInizio().getMonthValue() || c.getDataFine().getYear() > c.getDataFine().getYear() ) {
+									giornoFine = c.getDataInizio().lengthOfMonth() + c.getDataFine().getDayOfMonth();
+								}
 
-						for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
-						%>
-						<div class="numeriGiorni"
-							style="<%="grid-column-start: "
+								for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
+								%>
+								<div class="numeriGiorni"
+									style="<%="grid-column-start: "
 		+ ( 1 + i )%>">
-							<%=c.getGiornoSettimana( i )%>
-						</div>
-						<%
-						}
+									<%=c.getGiornoSettimana( i )%>
+								</div>
+								<%
+								}
 
-						int g = c.getDataInizio().getDayOfMonth();
-						for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
-						if ( g > c.getDataInizio().lengthOfMonth() ) {
-							g = 1;
-						}
-						%>
-						<div class="numeriGiorni"
-							style="<%="grid-column-start: "
+								int g = c.getDataInizio().getDayOfMonth();
+								for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
+								if ( g > c.getDataInizio().lengthOfMonth() ) {
+									g = 1;
+								}
+								%>
+								<div class="numeriGiorni"
+									style="<%="grid-column-start: "
 		+ ( 1 + i )%>">
-							<%=g%>
-						</div>
-						<%
-						g++ ;
-						}
-						%>
-					</form>
-				</td>
-			</tr>
-			<%
-			String calendarioHTML = c.getCalendarioInRangeHTML();
-			%>
-		</thead>
-		<tbody>
-			<tr>
-				<td colspan="2"><%=calendarioHTML%></td>
-			</tr>
-		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="3">
-					<div class="calcoloTotale">
-						<div class="totale"
-							style="grid-row-start: 1; grid-column-start: 1;">Totale
-							ospiti</div>
+									<%=g%>
+								</div>
+								<%
+								g++ ;
+								}
+								%>
+							</form>
+						</td>
+					</tr>
+					<%
+					String calendarioHTML = c.getCalendarioInRangeHTML();
+					%>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="2"><%=calendarioHTML%></td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="3">
+							<div class="calcoloTotale">
+								<div class="totale"
+									style="grid-row-start: 1; grid-column-start: 1;">Totale
+									ospiti</div>
 
-						<%
-						for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
-						%>
-						<div class="cellaTotale"
-							style="<%="grid-row-start: 1; grid-column-start: "
+								<%
+								for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
+								%>
+								<div class="cellaTotale"
+									style="<%="grid-row-start: 1; grid-column-start: "
 		+ ( 2 + i )%>"><%= c.getTotaleOspiti( i ) %></div>
-						<%
-						}
-						%>
-						<div class="totale"
-							style="grid-row-start: 2; grid-column-start: 1; border-radius: 0 0 0 14px;">Totale
-							stanze occupate</div>
+								<%
+								}
+								%>
+								<div class="totale"
+									style="grid-row-start: 2; grid-column-start: 1; border-radius: 0 0 0 14px;">Totale
+									stanze occupate</div>
 
-						<%
-						for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
-						%>
-						<div class="cellaTotale"
-							style="<%="grid-row-start: 2; grid-column-start: "
+								<%
+								for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
+								%>
+								<div class="cellaTotale"
+									style="<%="grid-row-start: 2; grid-column-start: "
 		+ ( 2 + i )%>"><%= c.getTotalePresenze( i ) %></div>
-						<%
-						}
-						%>
+								<%
+								}
+								%>
+							</div>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+
+
+		<div id="cambiaVisualizzazione"
+			class="laterale d-flex flex-column flex-shrink-0 p-3 bg-light"
+			style="width: 235px;">
+			<ul class="nav nav-pills flex-column mb-auto">
+				<li class="nav-item">
+					<h5>Visualizzazione</h5>
+				</li>
+				<li class="nav-item my-3">
+					<input class="form-control" type="week" id="datePicker" name="datePicker" onchange="attivaServlet('<%=visualizzazione%>', 0)">
+				</li>
+				<li class="nav-item my-3">
+					<div class="form-check">
+						<input type="radio" class="form-check-input"
+							name="radioVisualizzazione" id="radioSettimana" value="settimana"
+							<%=( visualizzazione.equals( "settimana" ) ? "checked" : "" )%>
+							onchange="attivaServlet('settimana', 0)" /> <label
+							class="form-check-label" for="radioSettimana">Settimana</label>
 					</div>
-				</td>
-			</tr>
-		</tfoot>
-	</table>
+
+					<div class="form-check">
+						<input type="radio" class="form-check-input"
+							name="radioVisualizzazione" id="radioMese" value="mese"
+							<%=( visualizzazione.equals( "mese" ) ? "checked" : "" )%>
+							onchange="attivaServlet('mese', 0)" /> <label
+							class="form-check-label" for="radioMese">Mese</label>
+					</div>
+				</li>
+				<li class="nav-item"></li>
+				<li class="nav-item"></li>
+			</ul>
+		</div>
+	</div>
 </body>
 </html>

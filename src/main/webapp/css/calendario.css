@@ -1,8 +1,20 @@
 @charset "ISO-8859-1";
 
-body {
+.pagina {
+	display: grid;
+	grid-template-areas: "menubar menubar menubar"
+		"laterale tabella tabella" "laterale tabella tabella";
+	grid-template-columns: auto auto 1fr;
+	grid-template-rows: auto auto 1fr;
+	width: 100vw;
+	height: 100vh;
 	background-color: #f5f5f5;
 }
+
+.laterale {
+	grid-area: laterale;
+}
+
 
 .calcoloTotale, .calendario, .infoMese, griglia {
 	display: grid;
@@ -16,10 +28,14 @@ body {
 	margin-bottom: 50px;
 }
 
+.tabellaContainer{
+	grid-area: tabella;
+}
+
 .tabellaCalendario {
-	position: absolute;
+	/*position: absolute;
 	left: 50%;
-	transform: translate(-50%, 0);
+	transform: translate(-50%, 0);*/
 	margin-top: 10px;
 }
 
@@ -29,14 +45,7 @@ body {
 }
 
 .calendario {
-	/*padding-right: 2px;
-	overflow-y: scroll;
-	overflow-x: hidden;
-	height: 65vh;
-	min-height: 28px;*/
-	/*background-color: red;*/
 	border-radius: 0 0 14px 14px;
-	/*z-index: 2;*/
 }
 
 .giorno, .totale, .cellaTotale, .nomeMese, .numeriGiorni, .gruppoStanze,
@@ -58,7 +67,6 @@ body {
 
 .nomeMese, .numeriGiorni {
 	border: 1px solid #ced4da;
-	/*box-shadow: 0px 1px 3px 1px #ced4da;*/
 }
 
 .cellaTotale, .totale {
@@ -124,32 +132,7 @@ body {
 }
 
 .bottoneCambiaMese:active {
-	/*transform: translateY(3px);*/
 	transform: scale(0.9);
-}
-
-.bottoneNuovaPrenotazione {
-	width: 210px;
-	height: 110px;
-	font-size: 22px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: auto;
-	background-color: #44C3F2;
-	border-radius: 50px;
-	border: none;
-	transition: 0.1s;
-	display: none;
-}
-
-.bottoneNuovaPrenotazione:hover {
-	transform: scale(1.05);
-}
-
-.bottoneNuovaPrenotazione:active {
-	transform: scale(0.9);
-	background-color: #96CBF5;
 }
 
 .calendario::-webkit-scrollbar {

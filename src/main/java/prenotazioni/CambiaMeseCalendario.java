@@ -30,11 +30,29 @@ public class CambiaMeseCalendario extends HttpServlet {
 	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 
 		LocalDate data = Calendario.toDate( request.getParameter( "data" ) );
-		int sommaGiorni = Integer.valueOf( request.getParameter( "sommaGiorni" ) );
-		int nGiorniVisualizzati = Math.abs( sommaGiorni );
+		String visualizzazione = request.getParameter( "visualizzazione" );
+		int direzione = Integer.valueOf( request.getParameter( "direzione" ) );
 
-		request.setAttribute( "data", Calendario.formatData( data.plusDays( sommaGiorni ) ) );
-		request.setAttribute( "nGiorniVisualizzati", nGiorniVisualizzati );
+		switch ( visualizzazione ) {
+			case "settimana":
+				data = data.plusWeeks( direzione );
+				break;
+			case "mese":
+				if ( direzione == 1 ) {
+					data = data.plusDays( 32 );
+				}
+				if ( direzione == -1 ) {
+					data = data.plusDays( -2 );
+				} else {
+					break;
+				}
+
+				data = LocalDate.of( data.getYear(), data.getMonthValue(), 1 );
+				break;
+		}
+
+		request.setAttribute( "data", Calendario.formatData( data ) );
+		request.setAttribute( "visualizzazione", visualizzazione );
 		request.getRequestDispatcher( "calendario.jsp" ).forward( request, response );
 	}
 

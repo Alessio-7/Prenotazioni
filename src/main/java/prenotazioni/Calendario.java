@@ -32,6 +32,26 @@ public class Calendario {
 		this.nGiorni = ChronoUnit.DAYS.between( dataInizio, dataFine ) + 1l;
 	}
 
+	public static Calendario questaSettimana() {
+		LocalDate ora = LocalDate.now();
+		return Calendario.settimana( ora );
+	}
+
+	public static Calendario settimana( LocalDate date ) {
+		LocalDate firstDayOfWeek = date.minusDays( date.getDayOfWeek().getValue() - 1 );
+		return new Calendario( firstDayOfWeek, firstDayOfWeek.plusDays( 6 ) );
+	}
+
+	public static Calendario questoMese() {
+		LocalDate ora = LocalDate.now();
+		return Calendario.mese( ora );
+	}
+
+	public static Calendario mese( LocalDate date ) {
+		return new Calendario( LocalDate.of( date.getYear(), date.getMonthValue(), 1 ),
+				LocalDate.of( date.getYear(), date.getMonthValue(), date.getMonth().length( date.isLeapYear() ) ) );
+	}
+
 	public static Calendario periodo( LocalDate dataInizio, int nGiorni ) {
 		return new Calendario( dataInizio, dataInizio.plusDays( nGiorni - 1 ) );
 	}
@@ -51,13 +71,15 @@ public class Calendario {
 		Calendar oggi = Calendar.getInstance();
 		Calendar cal = Calendar.getInstance();
 		cal.set( Calendar.MONTH, dataInizio.getMonthValue() - 1 );
-		String nomeMese = cal.getDisplayName( Calendar.MONTH, Calendar.SHORT, Locale.getDefault() );
+
+		String nomeMese = cal.getDisplayName( Calendar.MONTH, ( nGiorni < 16 ? Calendar.SHORT : Calendar.LONG ), Locale.getDefault() );
+
 		nomeMese = nomeMese.substring( 0, 1 ).toUpperCase() + nomeMese.substring( 1 ) + ( oggi.get( Calendar.YEAR ) != dataInizio.getYear() ? " "
 				+ dataInizio.getYear() : "" );
 
 		if ( dataInizio.getMonthValue() != dataFine.getMonthValue() ) {
 			cal.set( Calendar.MONTH, dataFine.getMonthValue() - 1 );
-			String nomeMese2 = cal.getDisplayName( Calendar.MONTH, Calendar.SHORT, Locale.getDefault() );
+			String nomeMese2 = cal.getDisplayName( Calendar.MONTH, ( nGiorni < 16 ? Calendar.SHORT : Calendar.LONG ), Locale.getDefault() );
 			nomeMese2 = nomeMese2.substring( 0, 1 ).toUpperCase() + nomeMese2.substring( 1 ) + ( oggi.get( Calendar.YEAR ) != dataFine.getYear() ? " "
 					+ dataFine.getYear() : "" );
 
