@@ -128,15 +128,16 @@ public class Prenotazioni extends Connessione {
 				continue;
 			}
 
-			boolean condizione1 = controllo.dataCompresa( p.getArrivo() ) || controllo.dataCompresa( p.getPartenza() ); // se l'intervallo della p. da
-																														// validare è compreso
-																														// nell'intervallo di controllo
-			boolean condizione2 = controllo.getArrivo().isAfter( p.getArrivo() ) && p.getPartenza().isAfter( controllo.getPartenza() ); // se l'intervallo
+			boolean condizione1 = controllo.dataCompresa( p.getArrivo() ) || controllo.dataCompresa( p.getPartenza().minusDays( 1 ) ); // se l'intervallo
 																																		// della p. da
-																																		// validare
-																																		// comprende
-																																		// l'intervallo di
-																																		// controllo
+			// validare è compreso
+			// nell'intervallo di controllo
+			boolean condizione2 = controllo.getArrivo().isAfter( p.getArrivo() ) && p.getPartenza().isAfter( controllo.getPartenza() ); // se l'intervallo
+			// della p. da
+			// validare
+			// comprende
+			// l'intervallo di
+			// controllo
 			if ( condizione1 || condizione2 ) {
 				return controllo;
 			}

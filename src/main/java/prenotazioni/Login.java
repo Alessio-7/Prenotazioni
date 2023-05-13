@@ -33,7 +33,7 @@ public class Login extends HttpServlet {
 		String password = request.getParameter( "inputUserName" );
 		String ricordaCredenziali = request.getParameter( "inputRicordaCredenziali" );
 
-		if ( username.equals( "b" ) && password.equals( "b" ) ) {
+		if ( username.equals( "hackersgen" ) && password.equals( "sorint" ) ) {
 			response.sendRedirect( "./calendario.jsp" );
 		} else {
 			response.sendRedirect( "./index.jsp?erroreCredenziali=true" );
