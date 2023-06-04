@@ -1,0 +1,5 @@
+SELECT prenotazione.idPrenotazione, rel.idStanza,rel.idgruppo
+FRom 
+Prenotazioni as prenotazione 
+INNER JOIN CollocazioniStanze as rel 
+	ON prenotazione.idStanza=rel.idStanza
