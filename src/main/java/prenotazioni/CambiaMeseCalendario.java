@@ -53,6 +53,7 @@ public class CambiaMeseCalendario extends HttpServlet {
 
 		request.setAttribute( "data", Calendario.formatData( data ) );
 		request.setAttribute( "visualizzazione", visualizzazione );
+		request.setAttribute( "sideBarCollapsed", request.getParameter( "sideBarCollapsed" ) );
 		request.getRequestDispatcher( "calendario.jsp" ).forward( request, response );
 	}
 

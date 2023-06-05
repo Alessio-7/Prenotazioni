@@ -13,7 +13,19 @@
 
 .laterale {
 	grid-area: laterale;
+	width: 235px;
+	background-color: #f9f9f9;
 }
+
+.sideBarCollapsed {
+	width: 0;
+	background-color: #f5f5f5;
+}
+
+.sideBarCollapsed li{
+	display: none;
+}
+
 
 
 .calcoloTotale, .calendario, .infoMese, griglia {

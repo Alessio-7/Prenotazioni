@@ -30,6 +30,12 @@ if (request.getAttribute("data") != null) {
 	visualizzazione = "settimana";
 	c = Calendario.questaSettimana();
 }
+
+String sideBarCollapsed = "false";
+
+if(request.getAttribute("sideBarCollapsed")!=null){
+	sideBarCollapsed = (String) request.getAttribute("sideBarCollapsed");
+}
 %>
 
 <script type="text/javascript">
@@ -100,7 +106,7 @@ if (request.getAttribute("data") != null) {
 	function formatDataToDatePicker(data){
 		const d = data.split('/');
 		
-		switch('<%= visualizzazione%>'){
+		switch('<%=visualizzazione%>'){
 		case 'settimana':
 			const date = new Date(d[2], d[1]-1, d[0]);
 			return d[2]+"-"+getWeekNumber(date);
@@ -112,7 +118,7 @@ if (request.getAttribute("data") != null) {
 	function formatDatePickerToData(data){
 		const d = data.split('-');
 		
-		switch('<%= visualizzazione%>'){
+		switch('<%=visualizzazione%>'){
 		case 'settimana':
 			const date = getDateOfWeek(d[1].replace("W", ""), d[0] );
 			return date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
@@ -125,7 +131,7 @@ if (request.getAttribute("data") != null) {
 		let datePicker = document.getElementById("datePicker");
 		let data = document.getElementById("data").value;
 		
-		switch('<%= visualizzazione%>'){
+		switch('<%=visualizzazione%>'){
 		case 'settimana':
 			datePicker.type = "week";
 			datePicker.value = formatDataToDatePicker(data);
@@ -137,6 +143,19 @@ if (request.getAttribute("data") != null) {
 		default:
 			datePicker.type = "week";
 		}
+	}
+	
+	function collapseSideBar(){
+		let sideBarCollapsed = document.getElementById("sideBarCollapsed").value === "true"		
+		//alert(sideBarCollapsed)
+		if(sideBarCollapsed){
+			document.getElementById("cambiaVisualizzazione").classList.toggle("sideBarCollapsed")
+		}else{
+			document.getElementById("cambiaVisualizzazione").classList.add("sideBarCollapsed")
+		}
+		
+		sideBarCollapsed=!sideBarCollapsed
+		document.getElementById("sideBarCollapsed").value = sideBarCollapsed.toString()
 	}
 </script>
 </head>
@@ -160,13 +179,15 @@ if (request.getAttribute("data") != null) {
 										<i class="bi bi-chevron-left"></i>
 									</button>
 									<div id="scrittaMese">
-										<%= c.getNomeMese() %>
+										<%=c.getNomeMese()%>
 									</div>
+									 <input type="hidden"
+										name="sideBarCollapsed" id="sideBarCollapsed" value="<%=sideBarCollapsed%>">
 									<input type="hidden" name="visualizzazione"
 										id="visualizzazione"></input> <input type="hidden"
 										name="direzione" id="direzione"></input> <input type="hidden"
 										name="data" id="data"
-										value="<%=Calendario.formatData( c.getDataInizio() )%>"></input>
+										value="<%=Calendario.formatData(c.getDataInizio())%>"></input>
 									<button type="Button" class="bottoneCambiaMese"
 										style="float: right"
 										onclick="attivaServlet('<%=visualizzazione%>', 1)">
@@ -175,33 +196,32 @@ if (request.getAttribute("data") != null) {
 								</div>
 								<%
 								int giornoFine = c.getDataFine().getDayOfMonth();
-								if ( c.getDataFine().getMonthValue() > c.getDataInizio().getMonthValue() || c.getDataFine().getYear() > c.getDataFine().getYear() ) {
+								if (c.getDataFine().getMonthValue() > c.getDataInizio().getMonthValue()
+										|| c.getDataFine().getYear() > c.getDataFine().getYear()) {
 									giornoFine = c.getDataInizio().lengthOfMonth() + c.getDataFine().getDayOfMonth();
 								}
 
-								for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
+								for (int i = 0; i < c.getNumeroGiorni(); i++) {
 								%>
 								<div class="numeriGiorni"
-									style="<%="grid-column-start: "
-		+ ( 1 + i )%>">
-									<%=c.getGiornoSettimana( i )%>
+									style="<%="grid-column-start: " + (1 + i)%>">
+									<%=c.getGiornoSettimana(i)%>
 								</div>
 								<%
 								}
 
 								int g = c.getDataInizio().getDayOfMonth();
-								for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
-								if ( g > c.getDataInizio().lengthOfMonth() ) {
+								for (int i = 0; i < c.getNumeroGiorni(); i++) {
+								if (g > c.getDataInizio().lengthOfMonth()) {
 									g = 1;
 								}
 								%>
 								<div class="numeriGiorni"
-									style="<%="grid-column-start: "
-		+ ( 1 + i )%>">
+									style="<%="grid-column-start: " + (1 + i)%>">
 									<%=g%>
 								</div>
 								<%
-								g++ ;
+								g++;
 								}
 								%>
 							</form>
@@ -225,11 +245,10 @@ if (request.getAttribute("data") != null) {
 									ospiti</div>
 
 								<%
-								for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
+								for (int i = 0; i < c.getNumeroGiorni(); i++) {
 								%>
 								<div class="cellaTotale"
-									style="<%="grid-row-start: 1; grid-column-start: "
-		+ ( 2 + i )%>"><%= c.getTotaleOspiti( i ) %></div>
+									style="<%="grid-row-start: 1; grid-column-start: " + (2 + i)%>"><%=c.getTotaleOspiti(i)%></div>
 								<%
 								}
 								%>
@@ -238,11 +257,10 @@ if (request.getAttribute("data") != null) {
 									stanze occupate</div>
 
 								<%
-								for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
+								for (int i = 0; i < c.getNumeroGiorni(); i++) {
 								%>
 								<div class="cellaTotale"
-									style="<%="grid-row-start: 2; grid-column-start: "
-		+ ( 2 + i )%>"><%= c.getTotalePresenze( i ) %></div>
+									style="<%="grid-row-start: 2; grid-column-start: " + (2 + i)%>"><%=c.getTotalePresenze(i)%></div>
 								<%
 								}
 								%>
@@ -255,20 +273,25 @@ if (request.getAttribute("data") != null) {
 
 
 		<div id="cambiaVisualizzazione"
-			class="laterale d-flex flex-column flex-shrink-0 p-3 bg-light"
-			style="width: 235px;">
+			class="laterale d-flex flex-column flex-shrink-0 p-3">
 			<ul class="nav nav-pills flex-column mb-auto">
-				<li class="nav-item">
-					<h5>Visualizzazione</h5>
-				</li>
-				<li class="nav-item my-3">
-					<input class="form-control" type="week" id="datePicker" name="datePicker" onchange="attivaServlet('<%=visualizzazione%>', 0)">
-				</li>
+				<div class="d-inline-flex align-items-end">
+					<button type="button" class="btn btn-primary me-3"
+						onclick="collapseSideBar()" style="width: min-content;">
+						<i class="bi bi-list"></i>
+					</button>
+					<li class="nav-item">
+						<h5>Visualizzazione</h5>
+					</li>
+				</div>
+				<li class="nav-item my-3"><input class="form-control"
+					type="week" id="datePicker" name="datePicker"
+					onchange="attivaServlet('<%=visualizzazione%>', 0)"></li>
 				<li class="nav-item my-3">
 					<div class="form-check">
 						<input type="radio" class="form-check-input"
 							name="radioVisualizzazione" id="radioSettimana" value="settimana"
-							<%=( visualizzazione.equals( "settimana" ) ? "checked" : "" )%>
+							<%=(visualizzazione.equals("settimana") ? "checked" : "")%>
 							onchange="attivaServlet('settimana', 0)" /> <label
 							class="form-check-label" for="radioSettimana">Settimana</label>
 					</div>
@@ -276,7 +299,7 @@ if (request.getAttribute("data") != null) {
 					<div class="form-check">
 						<input type="radio" class="form-check-input"
 							name="radioVisualizzazione" id="radioMese" value="mese"
-							<%=( visualizzazione.equals( "mese" ) ? "checked" : "" )%>
+							<%=(visualizzazione.equals("mese") ? "checked" : "")%>
 							onchange="attivaServlet('mese', 0)" /> <label
 							class="form-check-label" for="radioMese">Mese</label>
 					</div>
