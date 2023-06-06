@@ -1,6 +1,7 @@
 package database.object;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -26,6 +27,10 @@ public class Prenotazione implements Serializable {
 	private int nOspiti;
 	private LocalDate arrivo;
 	private LocalDate partenza;
+	private float ricavo;
+	private String note;
+	
+	private static final DecimalFormat twoPlaces = new DecimalFormat("0.00");
 
 	public String dataCompresaSimbolo( LocalDate data ) {
 
@@ -154,5 +159,25 @@ public class Prenotazione implements Serializable {
 
 	public void setIdStanza( Integer idStanza ) {
 		this.idStanza = idStanza;
+	}
+
+	public float getRicavo() {
+		return ricavo;
+	}
+	
+	public String getSRicavo() {
+		return "&euro; " + twoPlaces.format(ricavo);
+	}
+
+	public void setRicavo(float ricavo) {
+		this.ricavo = ricavo;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 }

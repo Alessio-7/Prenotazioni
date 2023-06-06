@@ -28,7 +28,7 @@
 
 	<div style="overflow: auto;">
 		<div style="float: right;">
-			<a class="btn btn-danger" href="${param.returnPage}">Annulla</a>
+			<a class="btn btn-danger" href="${param.returnPage}" id="annullaBtn" >Annulla</a>
 			<button type="button" class="btn btn-secondary" id="prevBtn"
 				onclick="nextPrev(-1)">Precedente</button>
 			<button type="button" class="btn btn-primary" id="nextBtn"
@@ -72,7 +72,12 @@
 			if (document.getElementById("nextBtn").innerHTML == "Fine") {
 				// ... the form gets submitted:
 				//document.getElementById("${param.formId}").submit();
+				document.getElementById("nextBtn").disabled = true;
+				document.getElementById("prevBtn").disabled = true;
+				document.getElementById("annullaBtn").disabled = true;
+				
 				document.getElementById("${param.formId}").onsubmit();
+				document.getElementById("${param.formId}").innerHTML = "<h1>Caricamento</h1>";
 				return false;
 			}
 			currentTab = document.getElementById(oTabs[currentTab.id][1][n]);

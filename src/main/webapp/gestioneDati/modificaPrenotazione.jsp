@@ -123,6 +123,16 @@ function aggiornaDati(){
 
 	tabs.put( "Scelta stanza", campi );
 	
+	campi = new ArrayList<Wizard.Campo>();
+	campi.add( new Wizard.Campo( "money", "ricavo", "Ricavo" ) );
+	
+	tabs.put( "Ricavo", campi );
+	
+	campi = new ArrayList<Wizard.Campo>();
+	campi.add( new Wizard.Campo( "textarea", "note", "Note - max 500 caratteri" ) );
+	
+	tabs.put( "Note", campi );
+	
 	%>
 	<div class="card">
 		<jsp:include page="/jsp/linearWizard.jsp">

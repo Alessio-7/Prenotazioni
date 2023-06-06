@@ -55,7 +55,7 @@ public class GestioneDati {
 					+ stessoGiorno.getAnagrafica().getCognome()
 					+ " "
 					+ stessoGiorno.getAnagrafica().getNome()
-					+ " è stata già assegnata alla camera "
+					+ " ï¿½ stata giï¿½ assegnata alla camera "
 					+ stessoGiorno.getStanza()
 					+ ", dal giorno "
 					+ Calendario.formatData( stessoGiorno.getArrivo() )
@@ -65,12 +65,12 @@ public class GestioneDati {
 
 	}
 
-	public static void aggiungiPrenotazione( String idStanza, String idAnagrafica, String numeroOspiti, String dataArrivo, String dataPartenza )
+	public static void aggiungiPrenotazione( String idStanza, String idAnagrafica, String numeroOspiti, String dataArrivo, String dataPartenza, float ricavo, String note )
 			throws DatiException {
 
 		validaPrenotazione( "-1", idStanza, idAnagrafica, numeroOspiti, dataArrivo, dataPartenza );
 
-		Connessione.eseguiInsert( "INSERT INTO Prenotazioni (idStanza, idAnagrafica, numeroOspiti, dataArrivo, dataPartenza) VALUES ("
+		Connessione.eseguiInsert( "INSERT INTO Prenotazioni (idStanza, idAnagrafica, numeroOspiti, dataArrivo, dataPartenza, ricavo, note) VALUES ("
 				+ idStanza
 				+ ", "
 				+ idAnagrafica
@@ -80,10 +80,14 @@ public class GestioneDati {
 				+ dataArrivo
 				+ "\", \""
 				+ dataPartenza
+				+ "\", \""
+				+ ricavo
+				+ "\", \""
+				+ note
 				+ "\")" );
 	}
 
-	public static void modificaPrenotazione( String id, String idStanza, String idAnagrafica, String numeroOspiti, String dataArrivo, String dataPartenza )
+	public static void modificaPrenotazione( String id, String idStanza, String idAnagrafica, String numeroOspiti, String dataArrivo, String dataPartenza, float ricavo, String note )
 			throws DatiException {
 
 		validaPrenotazione( id, idStanza, idAnagrafica, numeroOspiti, dataArrivo, dataPartenza );
@@ -98,6 +102,10 @@ public class GestioneDati {
 				+ dataArrivo
 				+ "\", dataPartenza = \""
 				+ dataPartenza
+				+ "\", ricavo = \""
+				+ ricavo
+				+ "\", note = \""
+				+ note
 				+ "\" WHERE idPrenotazione ="
 				+ id );
 

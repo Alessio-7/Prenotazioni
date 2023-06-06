@@ -219,6 +219,23 @@ function aggiungiDati(){
 	campi.add( new Wizard.Campo( "multiSelect", "multiStanze", "Stanze - selezione multipla premendo CTRL" ) );
 	
 	gruppo = gruppo.addChild("Stanze", campi);
+
+	// ---ricavo---
+	
+	campi = new ArrayList<Wizard.Campo>();
+	campi.add( new Wizard.Campo( "money", "ricavo", "Ricavo" ) );
+	
+	singolo = singolo.addChild("Ricavo",campi);
+	gruppo = gruppo.addChild("Ricavo",campi);
+	
+	// ---note---
+	
+	campi = new ArrayList<Wizard.Campo>();
+	campi.add( new Wizard.Campo( "textarea", "note", "Note - max 500 caratteri" ) );
+	
+	singolo = singolo.addChild("Note",campi);
+	gruppo = gruppo.addChild("Note",campi);
+	
 	
 	//---id---
 	

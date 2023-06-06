@@ -82,13 +82,13 @@ public class ModificaDatabase extends HttpServlet {
 						if ( request.getParameter( "tipoPrenotazione" ).equals( "singola" ) ) {
 							GestioneDati.aggiungiPrenotazione( request.getParameter( "stanza" ), request.getParameter( "anagrafica" ),
 									request.getParameter( "numeroOspiti" ), formatData( request.getParameter( "dataArrivo" ) ),
-									formatData( request.getParameter( "dataPartenza" ) ) );
+									formatData( request.getParameter( "dataPartenza" ) ), Float.valueOf(request.getParameter( "ricavo" )), request.getParameter( "note" ) );
 						} else {
 							for ( String stanza : request.getParameterMap().get( "multiStanze" ) ) {
-								// TODO per ogni stanza apre il database, fa l'insert e poi lo richiude fare che
+								// TODO per ogni stanza apre il database, fa l'insert e poi lo richiude, fare che
 								// lo apre una sola volta, fa tutte le insert e poi lo chiude
 								GestioneDati.aggiungiPrenotazione( stanza, request.getParameter( "anagrafica1" ), request.getParameter( "numeroOspiti1" ),
-										formatData( request.getParameter( "dataArrivo" ) ), formatData( request.getParameter( "dataPartenza" ) ) );
+										formatData( request.getParameter( "dataArrivo" ) ), formatData( request.getParameter( "dataPartenza" ) ), Float.valueOf(request.getParameter( "ricavo" )), request.getParameter( "note" ) );
 							}
 						}
 					} catch ( DatiException e ) {
@@ -128,7 +128,7 @@ public class ModificaDatabase extends HttpServlet {
 					try {
 						GestioneDati.modificaPrenotazione( request.getParameter( "idDato" ), request.getParameter( "stanza" ),
 								request.getParameter( "anagrafica" ), request.getParameter( "numeroOspiti" ),
-								formatData( request.getParameter( "dataArrivo" ) ), formatData( request.getParameter( "dataPartenza" ) ) );
+								formatData( request.getParameter( "dataArrivo" ) ), formatData( request.getParameter( "dataPartenza" ) ), Float.valueOf(request.getParameter( "ricavo" )), request.getParameter( "note" ) );
 					} catch ( DatiException e ) {
 						errore = e.getMessage();
 

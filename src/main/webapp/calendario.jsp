@@ -273,9 +273,9 @@ if(request.getAttribute("sideBarCollapsed")!=null){
 
 
 		<div id="cambiaVisualizzazione"
-			class="laterale d-flex flex-column flex-shrink-0 p-3">
+			class="laterale d-flex flex-column flex-shrink-0 p-3 <%=sideBarCollapsed.equals("true")?"sideBarCollapsed":""%>">
 			<ul class="nav nav-pills flex-column mb-auto">
-				<div class="d-inline-flex align-items-end">
+				<div class="d-inline-flex align-items-end mb-3">
 					<button type="button" class="btn btn-primary me-3"
 						onclick="collapseSideBar()" style="width: min-content;">
 						<i class="bi bi-list"></i>

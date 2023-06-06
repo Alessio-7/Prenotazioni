@@ -10,7 +10,7 @@ public class Wizard {
 		String ritorno = "var oTabs = {\n";
 
 		ritorno += rGenerateTabsObject( step );
-		ritorno = ritorno.substring( 0, ritorno.length() - 1 );// rimuove la virgola in più
+		ritorno = ritorno.substring( 0, ritorno.length() - 1 );// rimuove la virgola in piï¿½
 
 		ritorno += "};";
 		return ritorno;
@@ -35,7 +35,7 @@ public class Wizard {
 						+ child.getIdName()
 						+ "\",";
 			}
-			ritorno = ritorno.substring( 0, ritorno.length() - 1 );// rimuove la virgola in più
+			ritorno = ritorno.substring( 0, ritorno.length() - 1 );// rimuove la virgola in piï¿½
 		}
 		ritorno += "]],";
 
@@ -102,6 +102,19 @@ public class Wizard {
 
 		public String generaCampo( int i ) {
 			switch ( type ) {
+				case "textarea":
+					return"	<div class=\"form-group\">\r\n"
+							+ "<label for=\""+nome+"\" class=\"form-label\">"+label+"</label>\r\n"
+							+ "<textarea id=\""+nome+"\" name=\""+nome+"\" rows=\"3\" class=\"form-control\" maxlength=\"500\"></textarea>\r\n"
+							+ "	</div>";
+				case "money":
+					return "<div class=\"form-group\">\r\n"
+							+ "		<label class=\"form-label\" for=\""+nome+"\">"+label+"</label>\r\n"
+							+ "		<div class=\"input-group flex-nowrap\">\r\n"
+							+ "		 	<span class=\"input-group-text\" id=\"simboloEuro\">&euro;</span>\r\n"
+							+ "		  	<input type=\"number\" id=\""+nome+"\" name=\""+nome+"\" min=\"0\" step =\"0.05\" class=\"form-control\" aria-describedby=\"simboloEuro\">\r\n"
+							+ "  	</div>\r\n"
+							+ "	</div>";
 				case "branchSelector":
 					return "<button type=\"button\" class=\"branchBtn\" id=\""
 							+ nome

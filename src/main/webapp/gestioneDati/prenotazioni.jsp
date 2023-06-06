@@ -75,7 +75,7 @@ function aggiornaModalEliminaPrenotazione(id, nome, stanza, dataArrivo, dataPart
 	document.getElementById("messaggioEliminazione").innerHTML = "Eliminare la prenotazione di "+nome+"?<br>Stanza : "+stanza+"<br>Data arrivo : "+dataArrivo+"<br>Data partenza : "+dataPartenza;
 }
 
-function apriModificaPrenotazione(id, gruppoStanze, stanza, anagrafica, numeroOspiti, dataArrivo, dataPartenza){
+function apriModificaPrenotazione(id, gruppoStanze, stanza, anagrafica, numeroOspiti, dataArrivo, dataPartenza, ricavo, note){
 	let url = window.location.href;
 	url = url.slice(0, -16);
 	url = new URL(url+"modificaPrenotazione.jsp");
@@ -87,6 +87,8 @@ function apriModificaPrenotazione(id, gruppoStanze, stanza, anagrafica, numeroOs
 	url.searchParams.set('numeroOspiti', numeroOspiti);
 	url.searchParams.set('dataArrivo', dataArrivo);
 	url.searchParams.set('dataPartenza', dataPartenza);
+	url.searchParams.set('ricavo', ricavo);
+	url.searchParams.set('note', note);
 	
 	window.location.replace(url);
 }
@@ -105,6 +107,8 @@ function apriModificaPrenotazione(id, gruppoStanze, stanza, anagrafica, numeroOs
 						<th scope="col">Numero ospiti</th>
 						<th scope="col">Data arrivo</th>
 						<th scope="col">Data partenza</th>
+						<th scope="col">Ricavo</th>
+						<th scope="col">Note</th>
 						<th scope="col"></th>
 					</tr>
 				</thead>
@@ -130,6 +134,8 @@ function apriModificaPrenotazione(id, gruppoStanze, stanza, anagrafica, numeroOs
 						<td><%= prenotazione.getnOspiti() %></td>
 						<td><%=Calendario.formatData( prenotazione.getArrivo() )%></td>
 						<td><%=Calendario.formatData( prenotazione.getPartenza() )%></td>
+						<td><%= prenotazione.getSRicavo()%></td>
+						<td><%= prenotazione.getNote()%></td>
 						<td class="cellaBottoni"><div class="contenitoreBottoni">
 								<button class="bottoneModifica" title="Modifica"
 									onclick="apriModificaPrenotazione('<%=prenotazione.getIdPrenotazione()
@@ -144,7 +150,11 @@ function apriModificaPrenotazione(id, gruppoStanze, stanza, anagrafica, numeroOs
 		+ ", '"
 		+ prenotazione.getArrivoF()
 		+ "', '"
-		+ prenotazione.getPartenzaF()%>')">
+		+ prenotazione.getPartenzaF()
+		+ "', '"
+		+ prenotazione.getRicavo()
+		+ "', '"
+		+ prenotazione.getNote()%>')">
 									<i class="bi bi-pencil-square"></i>
 								</button>
 								<button class="bottoneElimina" title="Elimina"
