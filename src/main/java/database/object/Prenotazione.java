@@ -178,6 +178,6 @@ public class Prenotazione implements Serializable {
 	}
 
 	public void setNote(String note) {
-		this.note = note;
+		this.note = note.replaceAll("\n", " ");
 	}
 }

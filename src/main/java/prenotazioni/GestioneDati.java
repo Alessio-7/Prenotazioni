@@ -83,7 +83,7 @@ public class GestioneDati {
 				+ "\", \""
 				+ ricavo
 				+ "\", \""
-				+ note
+				+ note.replaceAll("\n", " ").replaceAll("\r", "")
 				+ "\")" );
 	}
 
@@ -105,7 +105,7 @@ public class GestioneDati {
 				+ "\", ricavo = \""
 				+ ricavo
 				+ "\", note = \""
-				+ note
+				+ note.replaceAll("\n", " ").replaceAll("\r", "")
 				+ "\" WHERE idPrenotazione ="
 				+ id );
 
