@@ -241,26 +241,29 @@ if(request.getAttribute("sideBarCollapsed")!=null){
 						<td colspan="3">
 							<div class="calcoloTotale">
 								<div class="totale"
-									style="grid-row-start: 1; grid-column-start: 1;">Totale
+									style="grid-row-start: 1; grid-column-start: 1;">Totale ricavo</div>
+								<div class="cellaTotaleRicavo" style="<%="grid-column-end: span "+c.getNumeroGiorni()+";"%>"><%=c.getTotaleRicavi()%></div>
+								<div class="totale"
+									style="grid-row-start: 2; grid-column-start: 1;">Totale
 									ospiti</div>
 
 								<%
 								for (int i = 0; i < c.getNumeroGiorni(); i++) {
 								%>
 								<div class="cellaTotale"
-									style="<%="grid-row-start: 1; grid-column-start: " + (2 + i)%>"><%=c.getTotaleOspiti(i)%></div>
+									style="<%="grid-row-start: 2; grid-column-start: " + (2 + i)%>"><%=c.getTotaleOspiti(i)%></div>
 								<%
 								}
 								%>
 								<div class="totale"
-									style="grid-row-start: 2; grid-column-start: 1; border-radius: 0 0 0 14px;">Totale
+									style="grid-row-start: 3; grid-column-start: 1; border-radius: 0 0 0 14px;">Totale
 									stanze occupate</div>
 
 								<%
 								for (int i = 0; i < c.getNumeroGiorni(); i++) {
 								%>
 								<div class="cellaTotale"
-									style="<%="grid-row-start: 2; grid-column-start: " + (2 + i)%>"><%=c.getTotalePresenze(i)%></div>
+									style="<%="grid-row-start: 3; grid-column-start: " + (2 + i)%>"><%=c.getTotalePresenze(i)%></div>
 								<%
 								}
 								%>

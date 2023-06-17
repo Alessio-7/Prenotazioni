@@ -29,8 +29,8 @@ public class Prenotazione implements Serializable {
 	private LocalDate partenza;
 	private float ricavo;
 	private String note;
-	
-	private static final DecimalFormat twoPlaces = new DecimalFormat("0.00");
+
+	private static final DecimalFormat twoPlaces = new DecimalFormat( "0.00" );
 
 	public String dataCompresaSimbolo( LocalDate data ) {
 
@@ -164,12 +164,18 @@ public class Prenotazione implements Serializable {
 	public float getRicavo() {
 		return ricavo;
 	}
-	
+
 	public String getSRicavo() {
-		return "&euro; " + twoPlaces.format(ricavo);
+		return "&euro; "
+				+ twoPlaces.format( ricavo );
 	}
 
-	public void setRicavo(float ricavo) {
+	public static String formatSoldi( float soldi ) {
+		return "&euro; "
+				+ twoPlaces.format( soldi );
+	}
+
+	public void setRicavo( float ricavo ) {
 		this.ricavo = ricavo;
 	}
 
@@ -177,7 +183,7 @@ public class Prenotazione implements Serializable {
 		return note;
 	}
 
-	public void setNote(String note) {
-		this.note = note.replaceAll("\n", " ");
+	public void setNote( String note ) {
+		this.note = note.replaceAll( "\n", " " );
 	}
 }

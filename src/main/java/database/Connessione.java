@@ -12,8 +12,10 @@ public class Connessione {
 		Connection conn = null;
 		try {
 			Class.forName( "org.sqlite.JDBC" );
-			//conn = DriverManager.getConnection( "jdbc:sqlite:F:\\Computer\\Documenti\\java-workspace\\prenotazioni\\database\\prenotazioni.db" );
-			conn = DriverManager.getConnection( "jdbc:sqlite:C:\\Users\\Silvia\\eclipse-workspace\\prenotazioni\\database\\prenotazioni.db" );
+			conn = DriverManager.getConnection( "jdbc:sqlite:F:\\Computer\\Documenti\\java-workspace\\prenotazioni\\database\\prenotazioni.db" );
+			// conn = DriverManager.getConnection(
+			// "jdbc:sqlite:C:\\Users\\Silvia\\eclipse-workspace\\prenotazioni\\database\\prenotazioni.db"
+			// );
 		} catch ( SQLException | ClassNotFoundException e ) {
 			e.printStackTrace();
 		}

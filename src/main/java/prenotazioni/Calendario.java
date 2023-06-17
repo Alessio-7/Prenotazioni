@@ -25,6 +25,8 @@ public class Calendario {
 	private HashMap<LocalDate, Integer> totaliPresenze;
 	private HashMap<LocalDate, Integer> totaliOspiti;
 
+	private float totaleRicavo;
+
 	public Calendario( LocalDate dataInizio, LocalDate dataFine ) {
 		this.dataInizio = dataInizio;
 		this.dataFine = dataFine;
@@ -125,6 +127,10 @@ public class Calendario {
 		}
 	}
 
+	public String getTotaleRicavi() {
+		return Prenotazione.formatSoldi( totaleRicavo );
+	}
+
 	public int getTotalePresenze( int i ) {
 		LocalDate data = dataInizio.plusDays( i );
 		return totaliPresenze.containsKey( data ) ? totaliPresenze.get( data ) : 0;
@@ -186,6 +192,8 @@ public class Calendario {
 					LocalDate skipData = null;
 					String simbolo = "";
 					String anagrafica = "";
+					String note = "";
+					String ricavo = "";
 
 					for ( Prenotazione prenotazione : prenotazioni ) {
 
@@ -197,6 +205,8 @@ public class Calendario {
 							if ( prenotazione.dataCompresa( data ) ) {
 								aggiungiPresenza( data );
 								aggiungiOspiti( data, prenotazione.getnOspiti() );
+
+								ricavo = prenotazione.getSRicavo();
 
 								simbolo = prenotazione.dataCompresaSimbolo( data );
 
@@ -214,36 +224,60 @@ public class Calendario {
 														+ prenotazione.getInfoAnagrafica()
 														+ "\nNumero ospiti: "
 														+ prenotazione.getnOspiti()
+														+ "\n\nNote:\n"
+														+ prenotazione.getNote()
+														+ "\n\nRicavo: "
+														+ prenotazione.getSRicavo()
 														+ "\n\nArrivo di:\n"
 														+ p.getInfoAnagrafica()
 														+ "\nNumero ospiti: "
-														+ p.getnOspiti();
+														+ p.getnOspiti()
+														+ "\n\nNote:\n"
+														+ p.getNote()
+														+ "\n\nRicavo: "
+														+ p.getSRicavo();
+												totaleRicavo += p.getRicavo();
 											}
 										}
 
 									}
 								}
 
+								note = prenotazione.getNote();
+
 								switch ( simbolo ) {
 									case Prenotazione.ARRIVO_PARTENZA: {
 										anagrafica = "Arrivo e partenza di:\n"
 												+ prenotazione.getInfoAnagrafica()
 												+ "\nNumero ospiti: "
-												+ prenotazione.getnOspiti();
+												+ prenotazione.getnOspiti()
+												+ "\n\nNote:\n"
+												+ prenotazione.getNote()
+												+ "\n\nRicavo: "
+												+ prenotazione.getSRicavo();
 										break;
 									}
 									case Prenotazione.ARRIVO: {
 										anagrafica = "Arrivo di:\n"
 												+ prenotazione.getInfoAnagrafica()
 												+ "\nNumero ospiti: "
-												+ prenotazione.getnOspiti();
+												+ prenotazione.getnOspiti()
+												+ "\n\nNote:\n"
+												+ prenotazione.getNote()
+												+ "\n\nRicavo: "
+												+ prenotazione.getSRicavo();
+										totaleRicavo += prenotazione.getRicavo();
 										break;
 									}
 									case Prenotazione.PARTENZA: {
 										anagrafica = "Partenza di:\n"
 												+ prenotazione.getInfoAnagrafica()
 												+ "\nNumero ospiti: "
-												+ prenotazione.getnOspiti();
+												+ prenotazione.getnOspiti()
+												+ "\n\nNote:\n"
+												+ prenotazione.getNote()
+												+ "\n\nRicavo: "
+												+ prenotazione.getSRicavo();
 										break;
 									}
 									case Prenotazione.PUNTO: {
@@ -251,7 +285,11 @@ public class Calendario {
 												+ "° Giorno di presenza di:\n"
 												+ prenotazione.getInfoAnagrafica()
 												+ "\nNumero ospiti: "
-												+ prenotazione.getnOspiti();
+												+ prenotazione.getnOspiti()
+												+ "\n\nNote:\n"
+												+ prenotazione.getNote()
+												+ "\n\nRicavo: "
+												+ prenotazione.getSRicavo();
 										break;
 									}
 								}

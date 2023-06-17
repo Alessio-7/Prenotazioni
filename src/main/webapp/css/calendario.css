@@ -60,7 +60,7 @@
 	border-radius: 0 0 14px 14px;
 }
 
-.giorno, .totale, .cellaTotale, .nomeMese, .numeriGiorni, .gruppoStanze,
+.giorno, .totale, .cellaTotale, .cellaTotaleRicavo, .nomeMese, .numeriGiorni, .gruppoStanze,
 	.stanza, .cella {
 	background-color: white;
 	min-height: 28px;
@@ -72,7 +72,7 @@
 	overflow: hidden;
 }
 
-.cellaTotale, .giorno, .numeriGiorni {
+.cellaTotale, .giorno, .numeriGiorni, .cellaTotaleRicavo {
 	min-width: 28px;
 	grid-column-end: span 1;
 }
@@ -81,9 +81,16 @@
 	border: 1px solid #ced4da;
 }
 
-.cellaTotale, .totale {
+.cellaTotale, .cellaTotaleRicavo, .totale {
 	background-color: #1D81AF;
 	color: white;
+}
+
+.cellaTotaleRicavo {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    justify-content: start;
+    padding-left: 15px;
 }
 
 .totale {

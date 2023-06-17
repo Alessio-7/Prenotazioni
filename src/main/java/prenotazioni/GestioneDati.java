@@ -55,7 +55,7 @@ public class GestioneDati {
 					+ stessoGiorno.getAnagrafica().getCognome()
 					+ " "
 					+ stessoGiorno.getAnagrafica().getNome()
-					+ " � stata gi� assegnata alla camera "
+					+ " e' stata gia' assegnata alla camera "
 					+ stessoGiorno.getStanza()
 					+ ", dal giorno "
 					+ Calendario.formatData( stessoGiorno.getArrivo() )
@@ -65,8 +65,8 @@ public class GestioneDati {
 
 	}
 
-	public static void aggiungiPrenotazione( String idStanza, String idAnagrafica, String numeroOspiti, String dataArrivo, String dataPartenza, float ricavo, String note )
-			throws DatiException {
+	public static void aggiungiPrenotazione( String idStanza, String idAnagrafica, String numeroOspiti, String dataArrivo, String dataPartenza,
+			float ricavo, String note ) throws DatiException {
 
 		validaPrenotazione( "-1", idStanza, idAnagrafica, numeroOspiti, dataArrivo, dataPartenza );
 
@@ -83,12 +83,12 @@ public class GestioneDati {
 				+ "\", \""
 				+ ricavo
 				+ "\", \""
-				+ note.replaceAll("\n", " ").replaceAll("\r", "")
+				+ note.replaceAll( "\n", " " ).replaceAll( "\r", "" )
 				+ "\")" );
 	}
 
-	public static void modificaPrenotazione( String id, String idStanza, String idAnagrafica, String numeroOspiti, String dataArrivo, String dataPartenza, float ricavo, String note )
-			throws DatiException {
+	public static void modificaPrenotazione( String id, String idStanza, String idAnagrafica, String numeroOspiti, String dataArrivo, String dataPartenza,
+			float ricavo, String note ) throws DatiException {
 
 		validaPrenotazione( id, idStanza, idAnagrafica, numeroOspiti, dataArrivo, dataPartenza );
 
@@ -105,7 +105,7 @@ public class GestioneDati {
 				+ "\", ricavo = \""
 				+ ricavo
 				+ "\", note = \""
-				+ note.replaceAll("\n", " ").replaceAll("\r", "")
+				+ note.replaceAll( "\n", " " ).replaceAll( "\r", "" )
 				+ "\" WHERE idPrenotazione ="
 				+ id );
 
