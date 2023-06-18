@@ -150,7 +150,6 @@ public class Calendario {
 
 		int y = 1;
 		ArrayList<Prenotazione> prenotazioni = Prenotazioni.getPrenotazioni();
-
 		LinkedHashMap<String, ArrayList<String>> gruppiStanze = CollocazioniStanze.getGruppiStanze();
 		for ( Map.Entry<String, ArrayList<String>> e : gruppiStanze.entrySet() ) {
 			String gruppoStanze = e.getKey();
@@ -336,21 +335,16 @@ public class Calendario {
 		}
 
 		private static int getIndexSin( int index, int maxIndex ) {
-			int ritorno = 0;
-			boolean sali = true;
 
-			// TODO trovare una formula matematica che levi il for
-			for ( int i = 0; i < index; i++ ) {
-				if ( ritorno == 0 ) {
-					sali = true;
-				} else if ( ritorno == maxIndex ) {
-					sali = false;
-				}
+			final int periodo = maxIndex * 2;
 
-				ritorno += sali ? 1 : -1;
-			}
+			if ( index >= periodo )
+				index -= periodo * ( index / periodo );
 
-			return ritorno;
+			if ( index > maxIndex )
+				return periodo - index;
+
+			return index;
 		}
 
 		public static String colore( int index ) {

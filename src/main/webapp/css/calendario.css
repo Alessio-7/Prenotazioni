@@ -81,16 +81,9 @@
 	border: 1px solid #ced4da;
 }
 
-.cellaTotale, .cellaTotaleRicavo, .totale {
+.cellaTotale, .totale, .cellaTotaleRicavo {
 	background-color: #1D81AF;
 	color: white;
-}
-
-.cellaTotaleRicavo {
-    grid-row-start: 1;
-    grid-column-start: 2;
-    justify-content: start;
-    padding-left: 15px;
 }
 
 .totale {

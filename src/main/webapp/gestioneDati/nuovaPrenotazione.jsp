@@ -222,10 +222,16 @@ function aggiungiDati(){
 
 	// ---ricavo---
 	
+	//TODO fare in modo di ricongiungere i due branch in uno unico, per non creare due volte gli step ricavo e note
+	
 	campi = new ArrayList<Wizard.Campo>();
 	campi.add( new Wizard.Campo( "money", "ricavo", "Ricavo" ) );
 	
 	singolo = singolo.addChild("Ricavo",campi);
+	
+	campi = new ArrayList<Wizard.Campo>();
+	campi.add( new Wizard.Campo( "money", "ricavo1", "Ricavo" ) );
+	
 	gruppo = gruppo.addChild("Ricavo",campi);
 	
 	// ---note---
@@ -234,6 +240,10 @@ function aggiungiDati(){
 	campi.add( new Wizard.Campo( "textarea", "note", "Note - max 500 caratteri" ) );
 	
 	singolo = singolo.addChild("Note",campi);
+	
+	campi = new ArrayList<Wizard.Campo>();
+	campi.add( new Wizard.Campo( "textarea", "note1", "Note - max 500 caratteri" ) );
+	
 	gruppo = gruppo.addChild("Note",campi);
 	
 	

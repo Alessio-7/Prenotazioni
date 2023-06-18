@@ -13,16 +13,19 @@
 Calendario c;
 String visualizzazione;
 
+int caselleCellaRicavo = 2;
+
 if (request.getAttribute("data") != null) {
 	LocalDate d = Calendario.toDate((String) request.getAttribute("data"));
 	visualizzazione = (String) request.getAttribute("visualizzazione");
 	switch (visualizzazione) {
 		case "settimana" :
-	c = Calendario.settimana(d);
-	break;
+		c = Calendario.settimana(d);
+		break;
 		case "mese" :
-	c = Calendario.mese(d);
-	break;
+		c = Calendario.mese(d);
+		caselleCellaRicavo = 3;
+		break;
 		default :
 	c = Calendario.questaSettimana();
 	}
@@ -33,7 +36,7 @@ if (request.getAttribute("data") != null) {
 
 String sideBarCollapsed = "false";
 
-if(request.getAttribute("sideBarCollapsed")!=null){
+if (request.getAttribute("sideBarCollapsed") != null) {
 	sideBarCollapsed = (String) request.getAttribute("sideBarCollapsed");
 }
 %>
@@ -181,13 +184,12 @@ if(request.getAttribute("sideBarCollapsed")!=null){
 									<div id="scrittaMese">
 										<%=c.getNomeMese()%>
 									</div>
-									 <input type="hidden"
-										name="sideBarCollapsed" id="sideBarCollapsed" value="<%=sideBarCollapsed%>">
-									<input type="hidden" name="visualizzazione"
-										id="visualizzazione"></input> <input type="hidden"
-										name="direzione" id="direzione"></input> <input type="hidden"
-										name="data" id="data"
-										value="<%=Calendario.formatData(c.getDataInizio())%>"></input>
+									<input type="hidden" name="sideBarCollapsed"
+										id="sideBarCollapsed" value="<%=sideBarCollapsed%>"> <input
+										type="hidden" name="visualizzazione" id="visualizzazione"></input>
+									<input type="hidden" name="direzione" id="direzione"></input> <input
+										type="hidden" name="data" id="data"
+										value="<%=Calendario.formatData( c.getDataInizio() )%>"></input>
 									<button type="Button" class="bottoneCambiaMese"
 										style="float: right"
 										onclick="attivaServlet('<%=visualizzazione%>', 1)">
@@ -196,32 +198,33 @@ if(request.getAttribute("sideBarCollapsed")!=null){
 								</div>
 								<%
 								int giornoFine = c.getDataFine().getDayOfMonth();
-								if (c.getDataFine().getMonthValue() > c.getDataInizio().getMonthValue()
-										|| c.getDataFine().getYear() > c.getDataFine().getYear()) {
+								if ( c.getDataFine().getMonthValue() > c.getDataInizio().getMonthValue() || c.getDataFine().getYear() > c.getDataFine().getYear() ) {
 									giornoFine = c.getDataInizio().lengthOfMonth() + c.getDataFine().getDayOfMonth();
 								}
 
-								for (int i = 0; i < c.getNumeroGiorni(); i++) {
+								for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
 								%>
 								<div class="numeriGiorni"
-									style="<%="grid-column-start: " + (1 + i)%>">
-									<%=c.getGiornoSettimana(i)%>
+									style="<%="grid-column-start: "
+		+ ( 1 + i )%>">
+									<%=c.getGiornoSettimana( i )%>
 								</div>
 								<%
 								}
 
 								int g = c.getDataInizio().getDayOfMonth();
-								for (int i = 0; i < c.getNumeroGiorni(); i++) {
-								if (g > c.getDataInizio().lengthOfMonth()) {
+								for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
+								if ( g > c.getDataInizio().lengthOfMonth() ) {
 									g = 1;
 								}
 								%>
 								<div class="numeriGiorni"
-									style="<%="grid-column-start: " + (1 + i)%>">
+									style="<%="grid-column-start: "
+		+ ( 1 + i )%>">
 									<%=g%>
 								</div>
 								<%
-								g++;
+								g++ ;
 								}
 								%>
 							</form>
@@ -241,17 +244,20 @@ if(request.getAttribute("sideBarCollapsed")!=null){
 						<td colspan="3">
 							<div class="calcoloTotale">
 								<div class="totale"
-									style="grid-row-start: 1; grid-column-start: 1;">Totale ricavo</div>
-								<div class="cellaTotaleRicavo" style="<%="grid-column-end: span "+c.getNumeroGiorni()+";"%>"><%=c.getTotaleRicavi()%></div>
+									style="grid-row-start: 1; grid-column-start: 1;">Totale
+									ricavo</div>
+										<div class="cellaTotaleRicavo" style="<%="grid-column-end: span "+caselleCellaRicavo+";"%>"><%= c.getTotaleRicavi()%></div>
+										<div class="cellaTotaleRicavo" style="<%="grid-column-end: span "+ (c.getNumeroGiorni()-caselleCellaRicavo)+ ";"%>"></div>
 								<div class="totale"
 									style="grid-row-start: 2; grid-column-start: 1;">Totale
 									ospiti</div>
 
 								<%
-								for (int i = 0; i < c.getNumeroGiorni(); i++) {
+								for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
 								%>
 								<div class="cellaTotale"
-									style="<%="grid-row-start: 2; grid-column-start: " + (2 + i)%>"><%=c.getTotaleOspiti(i)%></div>
+									style="<%="grid-row-start: 2; grid-column-start: "
+		+ ( 2 + i )%>"><%=c.getTotaleOspiti( i )%></div>
 								<%
 								}
 								%>
@@ -260,10 +266,11 @@ if(request.getAttribute("sideBarCollapsed")!=null){
 									stanze occupate</div>
 
 								<%
-								for (int i = 0; i < c.getNumeroGiorni(); i++) {
+								for ( int i = 0; i < c.getNumeroGiorni(); i++ ) {
 								%>
 								<div class="cellaTotale"
-									style="<%="grid-row-start: 3; grid-column-start: " + (2 + i)%>"><%=c.getTotalePresenze(i)%></div>
+									style="<%="grid-row-start: 3; grid-column-start: "
+		+ ( 2 + i )%>"><%=c.getTotalePresenze( i )%></div>
 								<%
 								}
 								%>
@@ -276,7 +283,7 @@ if(request.getAttribute("sideBarCollapsed")!=null){
 
 
 		<div id="cambiaVisualizzazione"
-			class="laterale d-flex flex-column flex-shrink-0 p-3 <%=sideBarCollapsed.equals("true")?"sideBarCollapsed":""%>">
+			class="laterale d-flex flex-column flex-shrink-0 p-3 <%=sideBarCollapsed.equals( "true" ) ? "sideBarCollapsed" : ""%>">
 			<ul class="nav nav-pills flex-column mb-auto">
 				<div class="d-inline-flex align-items-end mb-3">
 					<button type="button" class="btn btn-primary me-3"
@@ -294,7 +301,7 @@ if(request.getAttribute("sideBarCollapsed")!=null){
 					<div class="form-check">
 						<input type="radio" class="form-check-input"
 							name="radioVisualizzazione" id="radioSettimana" value="settimana"
-							<%=(visualizzazione.equals("settimana") ? "checked" : "")%>
+							<%=( visualizzazione.equals( "settimana" ) ? "checked" : "" )%>
 							onchange="attivaServlet('settimana', 0)" /> <label
 							class="form-check-label" for="radioSettimana">Settimana</label>
 					</div>
@@ -302,7 +309,7 @@ if(request.getAttribute("sideBarCollapsed")!=null){
 					<div class="form-check">
 						<input type="radio" class="form-check-input"
 							name="radioVisualizzazione" id="radioMese" value="mese"
-							<%=(visualizzazione.equals("mese") ? "checked" : "")%>
+							<%=( visualizzazione.equals( "mese" ) ? "checked" : "" )%>
 							onchange="attivaServlet('mese', 0)" /> <label
 							class="form-check-label" for="radioMese">Mese</label>
 					</div>

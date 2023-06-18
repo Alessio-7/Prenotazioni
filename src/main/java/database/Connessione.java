@@ -8,6 +8,8 @@ import java.sql.Statement;
 
 public class Connessione {
 
+	private static Statement stat;
+
 	static public Connection getConn() {
 		Connection conn = null;
 		try {
@@ -28,10 +30,16 @@ public class Connessione {
 	 */
 
 	protected static ResultSet eseguiSelect( String query ) {
-		Statement stat;
+		return eseguiSelect( query, true );
+	}
+
+	protected static ResultSet eseguiSelect( String query, boolean connessioneAutomatica ) {
 		try {
-			stat = getConn().createStatement();
-			return stat.executeQuery( query );
+
+			if ( connessioneAutomatica )
+				apriConnessione();
+			ResultSet ret = stat.executeQuery( query );
+			return ret;
 		} catch ( SQLException e ) {
 			e.printStackTrace();
 		}
@@ -39,23 +47,42 @@ public class Connessione {
 	}
 
 	public static void eseguiUpdate( String query ) {
-		Statement stat;
+		eseguiUpdate( query, true );
+	}
+
+	public static void eseguiUpdate( String query, boolean connessioneAutomatica ) {
 		try {
-			stat = getConn().createStatement();
+			if ( connessioneAutomatica )
+				apriConnessione();
 			stat.executeUpdate( query );
+			if ( connessioneAutomatica )
+				chiudiConnessione();
 		} catch ( SQLException e ) {
 			e.printStackTrace();
 		}
 	}
 
 	public static void eseguiInsert( String query ) {
-		Statement stat;
+		eseguiInsert( query, true );
+	}
+
+	public static void eseguiInsert( String query, boolean connessioneAutomatica ) {
 		try {
-			stat = getConn().createStatement();
+			if ( connessioneAutomatica )
+				apriConnessione();
 			stat.executeUpdate( query );
-			stat.close();
+			if ( connessioneAutomatica )
+				chiudiConnessione();
 		} catch ( SQLException e ) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void apriConnessione() throws SQLException {
+		stat = getConn().createStatement();
+	}
+
+	public static void chiudiConnessione() throws SQLException {
+		stat.close();
 	}
 }

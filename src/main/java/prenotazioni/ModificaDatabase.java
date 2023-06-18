@@ -35,7 +35,7 @@ public class ModificaDatabase extends HttpServlet {
 	 */
 	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 
-		if ( false ) {
+		if ( true ) {
 			System.out.println( "parametri:\n" );
 			for ( Map.Entry<String, String[]> e : request.getParameterMap().entrySet() ) {
 				System.out.println( e.getKey() );
@@ -82,14 +82,13 @@ public class ModificaDatabase extends HttpServlet {
 						if ( request.getParameter( "tipoPrenotazione" ).equals( "singola" ) ) {
 							GestioneDati.aggiungiPrenotazione( request.getParameter( "stanza" ), request.getParameter( "anagrafica" ),
 									request.getParameter( "numeroOspiti" ), formatData( request.getParameter( "dataArrivo" ) ),
-									formatData( request.getParameter( "dataPartenza" ) ), Float.valueOf(request.getParameter( "ricavo" )), request.getParameter( "note" ) );
+									formatData( request.getParameter( "dataPartenza" ) ), Float.valueOf( request.getParameter( "ricavo" ) ),
+									request.getParameter( "note" ) );
 						} else {
-							for ( String stanza : request.getParameterMap().get( "multiStanze" ) ) {
-								// TODO per ogni stanza apre il database, fa l'insert e poi lo richiude, fare che
-								// lo apre una sola volta, fa tutte le insert e poi lo chiude
-								GestioneDati.aggiungiPrenotazione( stanza, request.getParameter( "anagrafica1" ), request.getParameter( "numeroOspiti1" ),
-										formatData( request.getParameter( "dataArrivo" ) ), formatData( request.getParameter( "dataPartenza" ) ), Float.valueOf(request.getParameter( "ricavo" )), request.getParameter( "note" ) );
-							}
+							GestioneDati.aggiungiPrenotazioneGruppo( request.getParameterMap().get( "multiStanze" ), request.getParameter( "anagrafica1" ),
+									request.getParameter( "numeroOspiti1" ), formatData( request.getParameter( "dataArrivo" ) ),
+									formatData( request.getParameter( "dataPartenza" ) ), Float.valueOf( request.getParameter( "ricavo1" ) ),
+									request.getParameter( "note1" ) );
 						}
 					} catch ( DatiException e ) {
 						errore = e.getMessage();
@@ -128,7 +127,8 @@ public class ModificaDatabase extends HttpServlet {
 					try {
 						GestioneDati.modificaPrenotazione( request.getParameter( "idDato" ), request.getParameter( "stanza" ),
 								request.getParameter( "anagrafica" ), request.getParameter( "numeroOspiti" ),
-								formatData( request.getParameter( "dataArrivo" ) ), formatData( request.getParameter( "dataPartenza" ) ), Float.valueOf(request.getParameter( "ricavo" )), request.getParameter( "note" ) );
+								formatData( request.getParameter( "dataArrivo" ) ), formatData( request.getParameter( "dataPartenza" ) ),
+								Float.valueOf( request.getParameter( "ricavo" ) ), request.getParameter( "note" ) );
 					} catch ( DatiException e ) {
 						errore = e.getMessage();
 

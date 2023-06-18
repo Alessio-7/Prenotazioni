@@ -1,5 +1,6 @@
 package prenotazioni;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -85,6 +86,31 @@ public class GestioneDati {
 				+ "\", \""
 				+ note.replaceAll( "\n", " " ).replaceAll( "\r", "" )
 				+ "\")" );
+	}
+
+	public static void aggiungiPrenotazioneGruppo( String[] idStanze, String idAnagrafica, String numeroOspiti, String dataArrivo, String dataPartenza,
+			float ricavo, String note ) throws DatiException {
+		iniziaUpdateMultiplo();
+		for ( String stanza : idStanze ) {
+			validaPrenotazione( "-1", stanza, idAnagrafica, numeroOspiti, dataArrivo, dataPartenza );
+
+			Connessione.eseguiInsert( "INSERT INTO Prenotazioni (idStanza, idAnagrafica, numeroOspiti, dataArrivo, dataPartenza, ricavo, note) VALUES ("
+					+ stanza
+					+ ", "
+					+ idAnagrafica
+					+ ","
+					+ numeroOspiti
+					+ ", \""
+					+ dataArrivo
+					+ "\", \""
+					+ dataPartenza
+					+ "\", \""
+					+ ricavo
+					+ "\", \""
+					+ note.replaceAll( "\n", " " ).replaceAll( "\r", "" )
+					+ "\")", false );
+		}
+		finisciUpdateMultiplo();
 	}
 
 	public static void modificaPrenotazione( String id, String idStanza, String idAnagrafica, String numeroOspiti, String dataArrivo, String dataPartenza,
@@ -265,5 +291,21 @@ public class GestioneDati {
 		ritorno += "}";
 
 		return ritorno;
+	}
+
+	public static void iniziaUpdateMultiplo() {
+		try {
+			Connessione.apriConnessione();
+		} catch ( SQLException e ) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void finisciUpdateMultiplo() {
+		try {
+			Connessione.chiudiConnessione();
+		} catch ( SQLException e ) {
+			e.printStackTrace();
+		}
 	}
 }

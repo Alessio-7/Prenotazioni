@@ -175,6 +175,10 @@ public class Prenotazione implements Serializable {
 				+ twoPlaces.format( soldi );
 	}
 
+	public static String formatSoldiNumero( float soldi ) {
+		return twoPlaces.format( soldi );
+	}
+
 	public void setRicavo( float ricavo ) {
 		this.ricavo = ricavo;
 	}
