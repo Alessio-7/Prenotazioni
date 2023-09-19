@@ -11,8 +11,9 @@
 <nav
 	class="menubar navbar navbar-expand-lg navbar-dark bd-navbar sticky-top">
 	<div class="container-fluid">
-		<a class="navbar-brand" style="padding-left: 17px; font-size: 24px;">
-			<i class="bi bi-journal-bookmark-fill"></i> ToBook
+		<a class="navbar-brand" style="padding-left: 17px; font-size: 24px;"
+			href="/prenotazioni/calendario.jsp"> <i
+			class="bi bi-journal-bookmark-fill"></i> ToBook
 		</a>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">

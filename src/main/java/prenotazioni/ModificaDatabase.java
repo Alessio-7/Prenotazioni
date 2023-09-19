@@ -35,7 +35,7 @@ public class ModificaDatabase extends HttpServlet {
 	 */
 	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 
-		if ( true ) {
+		if ( false ) {
 			System.out.println( "parametri:\n" );
 			for ( Map.Entry<String, String[]> e : request.getParameterMap().entrySet() ) {
 				System.out.println( e.getKey() );
@@ -116,7 +116,7 @@ public class ModificaDatabase extends HttpServlet {
 					break;
 				}
 				default: {
-					System.out.println( "nse capito che devi fa" );
+					System.out.println( "errore" );
 				}
 			}
 		} else if ( azione.equals( "modifica" ) ) {
@@ -149,7 +149,7 @@ public class ModificaDatabase extends HttpServlet {
 					break;
 				}
 				default: {
-					System.out.println( "nse capito che devi fa" );
+					System.out.println( "errore" );
 				}
 			}
 
@@ -170,7 +170,7 @@ public class ModificaDatabase extends HttpServlet {
 					break;
 				}
 				default: {
-					System.out.println( "nse capito che devi fa" );
+					System.out.println( "errore" );
 				}
 			}
 		}

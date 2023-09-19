@@ -27,10 +27,8 @@ public class Login extends HttpServlet {
 	 *      response)
 	 */
 	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-		// response.getWriter().append( "Served at: " ).append( request.getContextPath()
-		// );
 		String username = request.getParameter( "inputUserName" );
-		String password = request.getParameter( "inputUserName" );
+		String password = request.getParameter( "inputPassword" );
 		String ricordaCredenziali = request.getParameter( "inputRicordaCredenziali" );
 
 		if ( username.equals( "hackersgen" ) && password.equals( "sorint" ) ) {

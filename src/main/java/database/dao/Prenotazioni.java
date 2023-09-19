@@ -27,7 +27,6 @@ public class Prenotazioni extends Connessione {
 		ArrayList<Prenotazione> ritorno = new ArrayList<>();
 		try {
 			ResultSet rit = eseguiSelect( select );
-			System.out.println( rit.getFetchSize() );
 			while ( rit.next() ) {
 				Prenotazione prenotazione = new Prenotazione();
 

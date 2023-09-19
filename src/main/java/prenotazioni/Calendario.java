@@ -235,7 +235,7 @@ public class Calendario {
 														+ p.getNote()
 														+ "\n\nRicavo: "
 														+ p.getSRicavo();
-												totaleRicavo += p.getRicavo();
+												totaleRicavo += prenotazione.getRicavo();
 											}
 										}
 
@@ -265,7 +265,6 @@ public class Calendario {
 												+ prenotazione.getNote()
 												+ "\n\nRicavo: "
 												+ prenotazione.getSRicavo();
-										totaleRicavo += prenotazione.getRicavo();
 										break;
 									}
 									case Prenotazione.PARTENZA: {
@@ -277,6 +276,7 @@ public class Calendario {
 												+ prenotazione.getNote()
 												+ "\n\nRicavo: "
 												+ prenotazione.getSRicavo();
+										totaleRicavo += prenotazione.getRicavo();
 										break;
 									}
 									case Prenotazione.PUNTO: {

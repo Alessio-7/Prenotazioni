@@ -13,7 +13,7 @@
 Calendario c;
 String visualizzazione;
 
-int caselleCellaRicavo = 2;
+int paddingTotaleRicavo = 26;
 
 if (request.getAttribute("data") != null) {
 	LocalDate d = Calendario.toDate((String) request.getAttribute("data"));
@@ -24,7 +24,7 @@ if (request.getAttribute("data") != null) {
 		break;
 		case "mese" :
 		c = Calendario.mese(d);
-		caselleCellaRicavo = 3;
+		paddingTotaleRicavo = 10;
 		break;
 		default :
 	c = Calendario.questaSettimana();
@@ -240,14 +240,14 @@ if (request.getAttribute("sideBarCollapsed") != null) {
 					</tr>
 				</tbody>
 				<tfoot>
+				
 					<tr>
 						<td colspan="3">
 							<div class="calcoloTotale">
 								<div class="totale"
 									style="grid-row-start: 1; grid-column-start: 1;">Totale
 									ricavo</div>
-										<div class="cellaTotaleRicavo" style="<%="grid-column-end: span "+caselleCellaRicavo+";"%>"><%= c.getTotaleRicavi()%></div>
-										<div class="cellaTotaleRicavo" style="<%="grid-column-end: span "+ (c.getNumeroGiorni()-caselleCellaRicavo)+ ";"%>"></div>
+										<div class="cellaTotaleRicavo" style="<%="padding-left: "+paddingTotaleRicavo+"px; grid-column-end:  span "+c.getNumeroGiorni()+";"%>"><%= c.getTotaleRicavi()%></div>
 								<div class="totale"
 									style="grid-row-start: 2; grid-column-start: 1;">Totale
 									ospiti</div>

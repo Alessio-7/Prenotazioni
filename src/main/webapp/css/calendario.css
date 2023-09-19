@@ -86,6 +86,11 @@
 	color: white;
 }
 
+.cellaTotaleRicavo {
+	justify-content: left;
+    padding-left: 10px;
+}
+
 .totale {
 	flex-grow: 1;
 	width: 232px;

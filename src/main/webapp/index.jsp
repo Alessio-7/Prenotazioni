@@ -39,7 +39,7 @@
 		<div class="form-group">
 			<label for="inputPassword">Password</label> <input type="password"
 				class="form-control <%=errore ? "is-invalid" : ""%>"
-				id="inputPassword" placeholder="Inserire la password">
+				name="inputPassword" id="inputPassword" placeholder="Inserire la password">
 		</div>
 		<div
 			class="form-check d-flex align-items-center justify-content-between">
