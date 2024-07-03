@@ -30,8 +30,8 @@ if (request.getAttribute("data") != null) {
 	c = Calendario.questaSettimana();
 	}
 } else {
-	visualizzazione = "settimana";
-	c = Calendario.questaSettimana();
+	visualizzazione = "mese";
+	c = Calendario.questoMese();
 }
 
 String sideBarCollapsed = "false";
